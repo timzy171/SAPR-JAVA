@@ -7,7 +7,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: linear-gradient(to left,#1ec1da,#7612e5);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.saprbar.HelloController">
    <children>
-      <Text fill="WHITE" layoutX="256.0" layoutY="116.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="SAPR-BAR" wrappingWidth="270.7470703125">
+      <Text fill="WHITE" layoutX="248.0" layoutY="128.0" stroke="BLACK" strokeType="OUTSIDE" strokeWidth="0.0" text="SAPR-JAVA" wrappingWidth="303.7470703125">
          <font>
             <Font name="Baloo Bhaijaan Regular" size="58.0" />
          </font>
