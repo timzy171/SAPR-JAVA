@@ -9,8 +9,12 @@ public class HelloController {
     private Button preProcessButton;
 
     @FXML
+    private Button processButton;
+
+    @FXML
     void initialize(){
         preProcessButton.setOnAction(actionEvent -> SceneSwitcher.openAnotherScene(preProcessButton,"preProcess.fxml"));
+        processButton.setOnAction(actionEvent -> {SceneSwitcher.openAnotherScene(processButton,"process.fxml");});
     }
 
 }

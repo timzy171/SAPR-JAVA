@@ -25,8 +25,14 @@ public class PreProcessController {
 
     @FXML
     private CheckBox lastNodeBlock;
+
+    @FXML
+    private Button backButton;
     @FXML
     void initialize(){
+        backButton.setOnAction(actionEvent -> {
+            SceneSwitcher.openAnotherScene(backButton,"hello-view.fxml");
+        });
         saveButton.setOnAction(actionEvent -> {
             ImageController.setNodeCounter(Integer.parseInt(nodeTextField.getText()));
             ImageController.setNodeInfo(getParsedNodeInfoList());

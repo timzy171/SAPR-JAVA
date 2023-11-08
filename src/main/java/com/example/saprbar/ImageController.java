@@ -3,6 +3,7 @@ package com.example.saprbar;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
@@ -15,7 +16,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ImageController{
+public class ImageController {
 
     @FXML
     private Canvas canvas;
@@ -31,13 +32,13 @@ public class ImageController{
         nodeCounter = nc;
     }
 
-    private static List<List<Double>> nodeInfo;
+    protected static List<List<Double>> nodeInfo;
 
     public static void setNodeInfo(List<List<Double>> ncs){
         nodeInfo = ncs;
     }
 
-    private static List<List<Double>> forces;
+    protected static List<List<Double>> forces;
     
     private List<Rectangle> rectangles = new ArrayList<>();
 
@@ -47,7 +48,13 @@ public class ImageController{
     public static List<Boolean> blocks = new ArrayList<>();
 
     @FXML
-    public void initialize() throws FileNotFoundException {
+    private Button backButton;
+
+    @FXML
+    public void initialize() {
+        backButton.setOnAction(actionEvent -> {
+            SceneSwitcher.openAnotherScene(backButton,"hello-view.fxml");
+        });
         gc = canvas.getGraphicsContext2D();
         System.out.println(nodeInfo);
         gc.setStroke(Color.BLACK);
@@ -87,58 +94,52 @@ public class ImageController{
             x = rectangle.getX() + rectangle.getWidth();
         }
 
-        for (int i = 0; i < forces.size(); i++) {
-            List<Double> currentForce = forces.get(i);
+        for (List<Double> currentForce : forces) {
             System.out.println("НОМЕР УЗЛА = " + currentForce.get(0));
-            Double index =  currentForce.get(0);
+            Double index = currentForce.get(0);
             Rectangle currentRectangle;
-            if(index == 1){
+            if (index == 1) {
                 currentRectangle = rectangles.get(0);
-            }
-            else{
+            } else {
                 currentRectangle = rectangles.get((int) (index - 2));
             }
             double plusWidth;
-            if(index != 1){
+            if (index != 1) {
                 plusWidth = currentRectangle.getWidth();
-            }
-            else{
+            } else {
                 plusWidth = rectangles.get(0).getWidth();
             }
 
-            if(currentForce.get(2) == 1){
+            if (currentForce.get(2) == 1) {
                 System.out.println(currentRectangle);
-                if(currentForce.get(1) < 0){
-                    drawArrow(gc,currentRectangle.getX() + plusWidth,currentRectangle.getY() + (currentRectangle.getHeight() / 2),
-                            currentRectangle.getX() + plusWidth - 25,currentRectangle.getY() + (currentRectangle.getHeight() / 2),true);
-                }
-                else{
-                    drawArrow(gc,currentRectangle.getX() + plusWidth,currentRectangle.getY() + (currentRectangle.getHeight() / 2),
-                            currentRectangle.getX() + plusWidth + 25,currentRectangle.getY() + (currentRectangle.getHeight() / 2),true);
+                if (currentForce.get(1) < 0) {
+                    drawArrow(gc, currentRectangle.getX() + plusWidth, currentRectangle.getY() + (currentRectangle.getHeight() / 2),
+                            currentRectangle.getX() + plusWidth - 25, currentRectangle.getY() + (currentRectangle.getHeight() / 2), true);
+                } else {
+                    drawArrow(gc, currentRectangle.getX() + plusWidth, currentRectangle.getY() + (currentRectangle.getHeight() / 2),
+                            currentRectangle.getX() + plusWidth + 25, currentRectangle.getY() + (currentRectangle.getHeight() / 2), true);
                 }
                 System.out.println(currentRectangle);
-            }
-            else if(currentForce.get(2) == 2){
-                if(currentForce.get(1) < 0){
+            } else if (currentForce.get(2) == 2) {
+                if (currentForce.get(1) < 0) {
                     int k = (int) (currentRectangle.getX() + plusWidth);
                     System.out.println(k);
                     System.out.println(currentRectangle.getX());
                     int minus = 15;
-                    while(k - currentRectangle.getX() > 5){
-                        drawArrow(gc,currentRectangle.getX() + plusWidth,currentRectangle.getY() + (currentRectangle.getHeight() / 2),
-                                currentRectangle.getX() + plusWidth - minus,currentRectangle.getY() + (currentRectangle.getHeight() / 2),false);
+                    while (k - currentRectangle.getX() > 5) {
+                        drawArrow(gc, currentRectangle.getX() + plusWidth, currentRectangle.getY() + (currentRectangle.getHeight() / 2),
+                                currentRectangle.getX() + plusWidth - minus, currentRectangle.getY() + (currentRectangle.getHeight() / 2), false);
                         minus += 15;
                         k -= 15;
                     }
 
-                }
-                else{
+                } else {
                     int k = (int) currentRectangle.getX();
                     System.out.println(currentRectangle.getX());
                     int plus = 15;
-                    while((currentRectangle.getX() + plusWidth) - k > 5){
-                        drawArrow(gc,currentRectangle.getX(),currentRectangle.getY() + (currentRectangle.getHeight() / 2),
-                                currentRectangle.getX() + plus,currentRectangle.getY() + (currentRectangle.getHeight() / 2),false);
+                    while ((currentRectangle.getX() + plusWidth) - k > 5) {
+                        drawArrow(gc, currentRectangle.getX(), currentRectangle.getY() + (currentRectangle.getHeight() / 2),
+                                currentRectangle.getX() + plus, currentRectangle.getY() + (currentRectangle.getHeight() / 2), false);
                         plus += 15;
                         k += 15;
                     }
