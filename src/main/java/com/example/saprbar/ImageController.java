@@ -3,11 +3,15 @@ package com.example.saprbar;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Affine;
 import javafx.scene.transform.Transform;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,9 +44,10 @@ public class ImageController{
     public static void setForces(List<List<Double>> fs){
         forces = fs;
     }
+    public static List<Boolean> blocks = new ArrayList<>();
 
     @FXML
-    public void initialize() {
+    public void initialize() throws FileNotFoundException {
         gc = canvas.getGraphicsContext2D();
         System.out.println(nodeInfo);
         gc.setStroke(Color.BLACK);
@@ -50,6 +55,11 @@ public class ImageController{
         gc.setFill(Color.WHITE);
         double x = 50.0;
         double y = 250.0;
+
+        boolean firstBlock = blocks.get(0);
+        boolean lastBlock = blocks.get(1);
+
+
         double currentHeight = nodeInfo.get(0).get(0) * HEIGHT_K;
         for (int i = 0; i < nodeCounter; i++) {
             Rectangle rectangle = new Rectangle();
@@ -67,7 +77,12 @@ public class ImageController{
             rectangle.setY(y);
             currentHeight = nodeInfo.get(i).get(0) * HEIGHT_K;
             rectangle.setHeight(currentHeight);
-            drawRectangle(gc,rectangle);
+            if(i == nodeCounter - 1){
+                drawRectangle(gc,rectangle,-1,firstBlock,lastBlock);
+            }
+            else{
+                drawRectangle(gc,rectangle,i,firstBlock,lastBlock);
+            }
             rectangles.add(rectangle);
             x = rectangle.getX() + rectangle.getWidth();
         }
@@ -130,14 +145,35 @@ public class ImageController{
                 }
             }
         }
-
     }
 
-    private void drawRectangle(GraphicsContext gc,Rectangle rect){
+    private void drawRectangle(GraphicsContext gc,Rectangle rect,int index,
+                               boolean firstBlock,boolean lastBlock){
         gc.strokeRect(rect.getX(),
                 rect.getY(),
                 rect.getWidth(),
                 rect.getHeight());
+
+        if (index == 0 && firstBlock){
+            double counter = 0;
+            double x = rect.getX() - 7;
+            double y = rect.getY();
+            while (counter < rect.getHeight()){
+                gc.strokeLine(rect.getX(),y,x,y + 5);
+                y += 10;
+                counter += 10;
+            }
+        }
+        else if(index == -1 && lastBlock){
+            double counter = 0;
+            double x = rect.getX() + rect.getWidth();
+            double y = rect.getY();
+            while (counter < rect.getHeight()){
+                gc.strokeLine(x,y,x + 7,y + 5);
+                y += 10;
+                counter += 10;
+            }
+        }
     }
 
     private void drawArrow(GraphicsContext gc, double x1, double y1, double x2, double y2,boolean flag) {

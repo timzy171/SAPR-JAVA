@@ -1,9 +1,7 @@
 package com.example.saprbar;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +21,18 @@ public class PreProcessController {
     private Button saveButton;
 
     @FXML
+    private CheckBox firstNodeBlock;
+
+    @FXML
+    private CheckBox lastNodeBlock;
+    @FXML
     void initialize(){
         saveButton.setOnAction(actionEvent -> {
             ImageController.setNodeCounter(Integer.parseInt(nodeTextField.getText()));
             ImageController.setNodeInfo(getParsedNodeInfoList());
             ImageController.setForces(getParsedForceList());
+            ImageController.blocks.add(firstNodeBlock.isSelected());
+            ImageController.blocks.add(lastNodeBlock.isSelected());
             SceneSwitcher.openAnotherScene(saveButton,"image.fxml");
         });
 
@@ -85,7 +90,6 @@ public class PreProcessController {
                         currentForces.get(1), currentForces.get(2))));
             }
             catch (Exception ignored){
-
             }
         }
         return forces;

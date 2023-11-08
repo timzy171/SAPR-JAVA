@@ -17,5 +17,10 @@
             <Font name="Hiragino Sans W2" size="13.0" />
          </font>
       </Button>
+      <Button fx:id="preProcessButton1" layoutX="314.0" layoutY="246.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="173.0" style="-fx-background-color: white;" text="ПРОЦЕССОР">
+         <font>
+            <Font name="Hiragino Sans W2" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
