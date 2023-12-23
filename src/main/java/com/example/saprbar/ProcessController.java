@@ -24,9 +24,9 @@ public class ProcessController {
             SceneSwitcher.openAnotherScene(backButton,"hello-view.fxml");
         });
         saveButton.setOnAction(actionEvent -> {
-            File constructionFile = new File("src/main/resources/files/" + fileNameField.getText() + ".cn");
-            File loadsFile = new File("src/main/resources/files/" + fileNameField.getText() + ".ld");
-            File resultFile = new File("src/main/resources/files/" + fileNameField.getText() + ".md");
+            File constructionFile = new File("src/main/resources/" + fileNameField.getText() + ".cn");
+            File loadsFile = new File("src/main/resources/" + fileNameField.getText() + ".ld");
+            File resultFile = new File("src/main/resources/" + fileNameField.getText() + ".md");
             try {
                 constructionFile.createNewFile();
                 loadsFile.createNewFile();
